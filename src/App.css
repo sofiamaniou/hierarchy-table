@@ -1,0 +1,25 @@
+#root {
+  padding: 2rem;
+}
+
+table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+th {
+  background: rgb(240, 238, 238);
+  text-align: left;
+}
+
+td, th {
+  border-bottom: thin solid;
+}
+
+.indentedItem {
+  padding-left: 2rem;
+}
