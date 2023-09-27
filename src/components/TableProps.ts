@@ -10,5 +10,5 @@ export interface TableProps {
   /**
    * The callback to expand/collapse a row.
    */
-  setIsExpanded?: (isExpanded: boolean) => void;
+  setIsExpanded?: (row: { [id: string]: boolean }) => void;
 }

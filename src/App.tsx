@@ -29,14 +29,14 @@ export const App: React.FC = () => {
   });
 
   const rootRows: string[] = [];
-  Object.keys(flattenedTableRowsMap).forEach((key: string) => {
-    if (flattenedTableRowsMap[key].label == "top-level") {
+  Object.keys(maps.flattenedTableRowsMap).forEach((key: string) => {
+    if (maps.flattenedTableRowsMap[key].label == "top-level") {
       rootRows.push(key);
     }
   });
 
   return (
-    <DataMapsContext.Provider value={{ maps, setMaps: () => setMaps }}>
+    <DataMapsContext.Provider value={{ maps, setMaps }}>
       <Table rowIds={rootRows} />
     </DataMapsContext.Provider>
   );

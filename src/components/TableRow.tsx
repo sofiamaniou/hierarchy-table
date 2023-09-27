@@ -16,11 +16,13 @@ export const TableRow: React.FC<TableRowProps> = (
 ): JSX.Element => {
   const { id, values, deleteRow } = props;
   const { maps } = useContext(DataMapsContext);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState<{ [id: string]: boolean }>({
+    [id]: false,
+  });
 
   const childrenIds = maps.parentChildrenMap[id] ?? [];
   const chevronIcon: IIconProps = {
-    iconName: isExpanded ? "ChevronDownMed" : "ChevronRightMed",
+    iconName: isExpanded[id] ? "ChevronDownMed" : "ChevronRightMed",
   };
 
   const cancelIcon: IIconProps = { iconName: "Cancel" };
@@ -28,10 +30,10 @@ export const TableRow: React.FC<TableRowProps> = (
   const expandButton = (
     <IconButton
       iconProps={chevronIcon}
-      title={isExpanded ? "ChevronDown" : "ChevronRight"}
-      ariaLabel={isExpanded ? "ChevronDown" : "ChevronRight"}
+      title={isExpanded[id] ? "ChevronDown" : "ChevronRight"}
+      ariaLabel={isExpanded[id] ? "ChevronDown" : "ChevronRight"}
       onClick={() => {
-        setIsExpanded(!isExpanded);
+        setIsExpanded({ [id]: !isExpanded[id] });
       }}
     />
   );
@@ -81,7 +83,7 @@ export const TableRow: React.FC<TableRowProps> = (
   return (
     <>
       <tr key={id}>{rowData}</tr>
-      {childrenIds.length && isExpanded ? (
+      {childrenIds.length && isExpanded[id] ? (
         <tr>
           <td>
             <Table rowIds={childrenIds} setIsExpanded={setIsExpanded} />

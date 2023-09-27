@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import { DataMapsContext } from "../context/DataMapsContext";
 import { TableHeader } from "./TableHeader";
@@ -13,7 +13,6 @@ import { TableRow } from "./TableRow";
 export const Table: React.FC<TableProps> = (props: TableProps): JSX.Element => {
   const { rowIds, setIsExpanded } = props;
   const { maps, setMaps } = useContext(DataMapsContext);
-  const [itemIds, setItemIds] = useState<string[]>(rowIds);
 
   const flattenedTableRowsMap = maps.flattenedTableRowsMap;
   const parentChildrenMap = maps.parentChildrenMap;
@@ -42,21 +41,22 @@ export const Table: React.FC<TableProps> = (props: TableProps): JSX.Element => {
         delete parentChildrenMap[parentId];
 
         if (setIsExpanded) {
-          setIsExpanded(false);
+          setIsExpanded({ [parentId]: false });
         }
       }
     });
 
-    const newItems = itemIds.filter((itemId: string) => itemId != id);
-    setItemIds(newItems);
-    setMaps({ flattenedTableRowsMap, parentChildrenMap });
+    setMaps({
+      flattenedTableRowsMap: { ...flattenedTableRowsMap },
+      parentChildrenMap: { ...parentChildrenMap },
+    });
   };
 
   const getRowElements = (): JSX.Element[] => {
     const rowElements: JSX.Element[] = [];
     let previousLabel = "";
 
-    itemIds.forEach((rowId: string) => {
+    rowIds.forEach((rowId: string) => {
       const currentRow = flattenedTableRowsMap[rowId];
       const currentLabel = currentRow.label;
 
